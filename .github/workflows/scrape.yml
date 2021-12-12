@@ -17,7 +17,7 @@ jobs:
         GARMIN_USERNAME: ${{ secrets.GARMIN_USERNAME }}
         GARMIN_PASSWORD: ${{ secrets.GARMIN_PASSWORD }}
       run: |-
-        sudo apt update && sudo apt install npm nodejs -y && npm install garmin-connect-scraper
+        sudo apt update && sudo apt install npm nodejs -y && npm install -g garmin-connect-scraper
         garmin-connect-scraper --username=$GARMIN_USERNAME --password=$GARMIN_PASSWORD
         
     - name: Commit and push if it changed
