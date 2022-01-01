@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TrainingCenterDatabase
+  xsi:schemaLocation="http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2 http://www.garmin.com/xmlschemas/TrainingCenterDatabasev2.xsd"
+  xmlns:ns5="http://www.garmin.com/xmlschemas/ActivityGoals/v1"
+  xmlns:ns3="http://www.garmin.com/xmlschemas/ActivityExtension/v2"
+  xmlns:ns2="http://www.garmin.com/xmlschemas/UserProfile/v2"
+  xmlns="http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns4="http://www.garmin.com/xmlschemas/ProfileExtension/v1">
+  <Activities>
+    <Activity Sport="Other">
+      <Id>2016-08-14T06:36:45.000Z</Id>
+      <Lap StartTime="2016-08-14T06:36:45.000Z">
+        <TotalTimeSeconds>1.031</TotalTimeSeconds>
+        <DistanceMeters>5.08</DistanceMeters>
+        <MaximumSpeed>2.062000036239624</MaximumSpeed>
+        <Calories>0</Calories>
+        <AverageHeartRateBpm>
+          <Value>139</Value>
+        </AverageHeartRateBpm>
+        <MaximumHeartRateBpm>
+          <Value>139</Value>
+        </MaximumHeartRateBpm>
+        <Intensity>Active</Intensity>
+        <TriggerMethod>Manual</TriggerMethod>
+        <Track>
+          <Trackpoint>
+            <Time>2016-08-14T06:36:45.000Z</Time>
+            <Position>
+              <LatitudeDegrees>-36.86509374529123</LatitudeDegrees>
+              <LongitudeDegrees>147.28633205406368</LongitudeDegrees>
+            </Position>
+            <AltitudeMeters>1588.4000244140625</AltitudeMeters>
+            <DistanceMeters>2.5799999237060547</DistanceMeters>
+            <HeartRateBpm>
+              <Value>139</Value>
+            </HeartRateBpm>
+            <Extensions>
+              <ns3:TPX>
+                <ns3:Speed>2.062000036239624</ns3:Speed>
+                <ns3:RunCadence>43</ns3:RunCadence>
+              </ns3:TPX>
+            </Extensions>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2016-08-14T06:36:46.000Z</Time>
+            <Position>
+              <LatitudeDegrees>-36.8650714494288</LatitudeDegrees>
+              <LongitudeDegrees>147.28633750230074</LongitudeDegrees>
+            </Position>
+            <AltitudeMeters>1587.0</AltitudeMeters>
+            <DistanceMeters>5.079999923706055</DistanceMeters>
+            <HeartRateBpm>
+              <Value>139</Value>
+            </HeartRateBpm>
+            <Extensions>
+              <ns3:TPX>
+                <ns3:Speed>1.930999994277954</ns3:Speed>
+                <ns3:RunCadence>43</ns3:RunCadence>
+              </ns3:TPX>
+            </Extensions>
+          </Trackpoint>
+        </Track>
+        <Extensions>
+          <ns3:LX>
+            <ns3:AvgSpeed>4.927000045776367</ns3:AvgSpeed>
+            <ns3:AvgRunCadence>43</ns3:AvgRunCadence>
+            <ns3:MaxRunCadence>43</ns3:MaxRunCadence>
+          </ns3:LX>
+        </Extensions>
+      </Lap>
+      <Creator xsi:type="Device_t">
+        <Name>vívoactive HR</Name>
+        <UnitId>3930013949</UnitId>
+        <ProductID>2337</ProductID>
+        <Version>
+          <VersionMajor>2</VersionMajor>
+          <VersionMinor>80</VersionMinor>
+          <BuildMajor>0</BuildMajor>
+          <BuildMinor>0</BuildMinor>
+        </Version>
+      </Creator>
+    </Activity>
+  </Activities>
+  <Author xsi:type="Application_t">
+    <Name>Connect Api</Name>
+    <Build>
+      <Version>
+        <VersionMajor>0</VersionMajor>
+        <VersionMinor>0</VersionMinor>
+        <BuildMajor>0</BuildMajor>
+        <BuildMinor>0</BuildMinor>
+      </Version>
+    </Build>
+    <LangID>en</LangID>
+    <PartNumber>006-D2449-00</PartNumber>
+  </Author>
+</TrainingCenterDatabase>

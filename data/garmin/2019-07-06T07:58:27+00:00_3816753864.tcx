@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TrainingCenterDatabase
+  xsi:schemaLocation="http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2 http://www.garmin.com/xmlschemas/TrainingCenterDatabasev2.xsd"
+  xmlns:ns5="http://www.garmin.com/xmlschemas/ActivityGoals/v1"
+  xmlns:ns3="http://www.garmin.com/xmlschemas/ActivityExtension/v2"
+  xmlns:ns2="http://www.garmin.com/xmlschemas/UserProfile/v2"
+  xmlns="http://www.garmin.com/xmlschemas/TrainingCenterDatabase/v2"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns4="http://www.garmin.com/xmlschemas/ProfileExtension/v1">
+  <Activities>
+    <Activity Sport="Other">
+      <Id>2019-07-06T07:58:27.000Z</Id>
+      <Lap StartTime="2019-07-06T07:58:27.000Z">
+        <TotalTimeSeconds>460.206</TotalTimeSeconds>
+        <DistanceMeters>375.0</DistanceMeters>
+        <MaximumSpeed>1.6990000009536743</MaximumSpeed>
+        <Calories>70</Calories>
+        <Intensity>Active</Intensity>
+        <TriggerMethod>Manual</TriggerMethod>
+        <Track>
+          <Trackpoint>
+            <Time>2019-07-06T07:58:27.000Z</Time>
+            <DistanceMeters>0.0</DistanceMeters>
+            <Extensions>
+              <ns3:TPX/>
+            </Extensions>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2019-07-06T08:03:22.000Z</Time>
+            <DistanceMeters>225.0</DistanceMeters>
+            <Extensions>
+              <ns3:TPX>
+                <ns3:Speed>0.8679999709129333</ns3:Speed>
+              </ns3:TPX>
+            </Extensions>
+          </Trackpoint>
+          <Trackpoint>
+            <Time>2019-07-06T08:06:09.000Z</Time>
+            <DistanceMeters>375.0</DistanceMeters>
+            <Extensions>
+              <ns3:TPX>
+                <ns3:Speed>1.6990000009536743</ns3:Speed>
+              </ns3:TPX>
+            </Extensions>
+          </Trackpoint>
+        </Track>
+        <Extensions>
+          <ns3:LX>
+            <ns3:AvgSpeed>0.8149999976158142</ns3:AvgSpeed>
+            <ns3:Steps>239</ns3:Steps>
+          </ns3:LX>
+        </Extensions>
+      </Lap>
+      <Creator xsi:type="Device_t">
+        <Name>fēnix 5 – Sapphire Edition</Name>
+        <UnitId>3948023825</UnitId>
+        <ProductID>2697</ProductID>
+        <Version>
+          <VersionMajor>13</VersionMajor>
+          <VersionMinor>30</VersionMinor>
+          <BuildMajor>0</BuildMajor>
+          <BuildMinor>0</BuildMinor>
+        </Version>
+      </Creator>
+    </Activity>
+  </Activities>
+  <Author xsi:type="Application_t">
+    <Name>Connect Api</Name>
+    <Build>
+      <Version>
+        <VersionMajor>0</VersionMajor>
+        <VersionMinor>0</VersionMinor>
+        <BuildMajor>0</BuildMajor>
+        <BuildMinor>0</BuildMinor>
+      </Version>
+    </Build>
+    <LangID>en</LangID>
+    <PartNumber>006-D2449-00</PartNumber>
+  </Author>
+</TrainingCenterDatabase>
