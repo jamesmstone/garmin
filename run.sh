@@ -66,14 +66,17 @@ function downloadAll() {
 function addActivity(){
     local db=$1
     local activitySummaryJSON=$2
+    local activityDetailsJSON=${activitySummaryJSON/summary/details}
     sql-utils insert "$db" "summary" "$activitySummaryJSON" --flatten --alter --pk=activityId --replace
+    sql-utils insert "$db" "details" "$activityDetailsJSON" --alter --pk=activityId --replace
 }
 
 function addAllActivity() {
     local db=${1}
     local N=4
     for f in $(find "$downloadDir" -name '*summary.json' );do
-        ((i=i%N)); ((i++==0)) && wait
+        i=$((i%N))
+        ((i++==0)) && wait
         addActivity "$db" $f &
     done
     wait
