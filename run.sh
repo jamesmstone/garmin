@@ -71,7 +71,9 @@ function addActivity(){
 
 function addAllActivity() {
     local db=${1}
+    local N=4
     for f in $(find "$downloadDir" -name '*summary.json' );do
+        ((i=i%N)); ((i++==0)) && wait
         addActivity "$db" $f &
     done
     wait
