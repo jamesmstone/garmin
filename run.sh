@@ -84,7 +84,7 @@ function addAllActivity() {
 
 makeDB() {
   local db="$1"
-  rm -rf "$db" || true
+  # rm -rf "$db" || true
   addAllActivity "$db"
 }
 
