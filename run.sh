@@ -201,7 +201,6 @@ commitData() {
 function publishDB() {
     datasette \
      publish vercel \
-     -i \
     "$db" \
      --token "$VERCEL_TOKEN" \
      --project=garminlog \
