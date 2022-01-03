@@ -197,7 +197,7 @@ function run() {
   local db="garmin.db"
 
   downloadAll
-#  commitData
+  commitData
 
   makeDB "$db"
   publishDB "$db"
