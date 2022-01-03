@@ -86,6 +86,8 @@ makeDB() {
   local db="$1"
   # rm -rf "$db" || true
   addAllActivity "$db"
+  sql-utils create-index --if-not-exists "$db" summary activityTypeDTO_typeKey 
+  
 }
 
 commitDB() {
