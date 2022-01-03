@@ -63,28 +63,30 @@ function downloadAll() {
     garpy download --username "$GARMIN_USERNAME" --password "$GARMIN_PASSWORD" "$downloadDir"
 }
 
-function addActivity(){
-    local db=$1
-    local activitySummaryJSON=$2
-    local activityDetailsJSON=${activitySummaryJSON/summary/details}
-    sql-utils insert "$db" "summary" "$activitySummaryJSON" --flatten --alter --pk=activityId --replace
-    sql-utils insert "$db" "details" "$activityDetailsJSON" --alter --pk=activityId --replace
-}
-
 function addAllActivity() {
     local db=${1}
-    local N=4
-    for f in $(find "$downloadDir" -name '*summary.json' );do
-        i=$((i%N))
-        ((i++==0)) && wait
-        addActivity "$db" $f &
-    done
-    wait
+
+    find "$downloadDir" -name '*summary.json' -exec jq . -c {} + |
+      sql-utils insert "$db" "summary" - \
+       --flatten \
+       --alter \
+       --pk=activityId \
+       --replace \
+       --nl
+
+    find "$downloadDir" -name '*details.json' -exec jq . -c {} + |
+      sql-utils insert "$db" "details" - \
+       --flatten \
+       --alter \
+       --pk=activityId \
+       --replace \
+       --nl
+
 }
 
 makeDB() {
   local db="$1"
-  # rm -rf "$db" || true
+  rm -rf "$db" || true
   addAllActivity "$db"
   sql-utils create-index --if-not-exists "$db" summary activityTypeDTO_typeKey
   sql-utils add-foreign-key "$db" details activityId summary activityId --ignore
