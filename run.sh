@@ -87,7 +87,66 @@ makeDB() {
   # rm -rf "$db" || true
   addAllActivity "$db"
   sql-utils create-index --if-not-exists "$db" summary activityTypeDTO_typeKey
-  sql-utils add-foreign-key "$db" summary activityId details activityId --ignore
+  sql-utils add-foreign-key "$db" details activityId summary activityId --ignore
+  sql-utils "$db" 'create table activityDetailMetrics as
+                   select d.activityId as activityId,
+                          s.activityTypeDTO_typeKey as activityTypeDTO_typeKey,
+                          json_extract(
+                                  m.value,
+                                  '\''$.metrics'\'') as activityDetailMetric,
+                          d.metricDescriptors,
+                          datetime(
+                                      json_extract(
+                                              m.value,
+                                              '\''$.metrics['\'' || (
+                                                  select json_extract(m.value, '\''$.metricsIndex'\'')
+                                                  from details di,
+                                                       json_each(di.metricDescriptors) m
+                                                  where di.activityId = d.activityId
+                                                    and json_extract(m.value, '\''$.key'\'') = '\''directTimestamp'\''
+                                              ) || '\'']'\''
+                                          ) / 1000,
+                                      '\''unixepoch'\''
+                              )                as "directTimestamp",
+                          json_extract(
+                                  m.value,
+                                  '\''$.metrics['\'' || (
+                                      select json_extract(m.value, '\''$.metricsIndex'\'')
+                                      from details di,
+                                           json_each(di.metricDescriptors) m
+                                      where di.activityId = d.activityId
+                                        and json_extract(m.value, '\''$.key'\'') = '\''directLongitude'\''
+                                  ) || '\'']'\''
+                              )                as "directLongitude",
+                          json_extract(
+                                  m.value,
+                                  '\''$.metrics['\'' || (
+                                      select json_extract(m.value, '\''$.metricsIndex'\'')
+                                      from details di,
+                                           json_each(di.metricDescriptors) m
+                                      where di.activityId = d.activityId
+                                        and json_extract(m.value, '\''$.key'\'') = '\''directLatitude'\''
+                                  ) || '\'']'\''
+                              )                as "directLatitude",
+                          json_extract(
+                                  m.value,
+                                  '\''$.metrics['\'' || (
+                                      select json_extract(m.value, '\''$.metricsIndex'\'')
+                                      from details di,
+                                           json_each(di.metricDescriptors) m
+                                      where di.activityId = d.activityId
+                                        and json_extract(m.value, '\''$.key'\'') = '\''directSpeed'\''
+                                  ) || '\'']'\''
+                              )                as "directSpeed"
+                   from summary s
+                            inner join details d on d.activityId = s.activityId,
+                        json_each(activitydetailmetrics) m
+                   order by 5'
+  sql-utils create-index --if-not-exists "$db" activityDetailMetrics activityId
+  sql-utils create-index --if-not-exists "$db" activityDetailMetrics activityTypeDTO_typeKey
+  sql-utils create-index --if-not-exists "$db" activityDetailMetrics directTimestamp
+  sql-utils create-index --if-not-exists "$db" activityDetailMetrics --  -directSpeed activityTypeDTO_typeKey
+  sql-utils add-foreign-key "$db" activityDetailMetrics activityId summary activityId --ignore
   sql-utils index-foreign-keys "$db"
   sql-utils optimize "$db"
 }
