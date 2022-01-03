@@ -206,6 +206,7 @@ function publishDB() {
      --token "$VERCEL_TOKEN" \
      --project=garminlog \
      --install=datasette-vega \
+     --install=datasette-cluster-map \
      --setting hash_urls 1 \
      --setting sql_time_limit_ms 4500 \
 
