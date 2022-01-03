@@ -168,6 +168,7 @@ remakeDB() {
   sql-utils create-index --if-not-exists "$db" activityDetailMetrics activityTypeDTO_typeKey
   sql-utils create-index --if-not-exists "$db" activityDetailMetrics directTimestamp
   sql-utils create-index --if-not-exists "$db" activityDetailMetrics --  -directSpeed activityTypeDTO_typeKey
+  sql-utils create-index --if-not-exists "$db" activityDetailMetrics --  activityTypeDTO_typeKey -directSpeed
   sql-utils add-foreign-key "$db" activityDetailMetrics activityId summary activityId --ignore
   sql-utils index-foreign-keys "$db"
   sql-utils analyze-tables "$db" --save
