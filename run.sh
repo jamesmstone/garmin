@@ -86,8 +86,10 @@ makeDB() {
   local db="$1"
   # rm -rf "$db" || true
   addAllActivity "$db"
-  sql-utils create-index --if-not-exists "$db" summary activityTypeDTO_typeKey 
-  
+  sql-utils create-index --if-not-exists "$db" summary activityTypeDTO_typeKey
+  sql-utils add-foreign-key "$db" summary activityId details activityId --ignore
+  sql-utils index-foreign-keys "$db"
+  sql-utils optimize "$db"
 }
 
 commitDB() {
