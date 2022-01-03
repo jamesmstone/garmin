@@ -206,8 +206,7 @@ function publishDB() {
      --project=garminlog \
      --install=datasette-vega \
      --install=datasette-cluster-map \
-     --setting hash_urls 1 \
-     --setting sql_time_limit_ms 4500 \
+     --setting sql_time_limit_ms 4500
 
 
 }
