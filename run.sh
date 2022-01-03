@@ -167,6 +167,19 @@ makeDB() {
   sql-utils optimize "$db"
 }
 
+commitDB() {
+  local dbBranch="db"
+  local db="$1"
+  local tempDB="$(mktemp)"
+  git branch -D "$dbBranch" || true
+  git checkout --orphan "$dbBranch"
+  mv "$db" "$tempDB"
+  rm -rf *
+  mv "$tempDB" "$db"
+  git add "$db"
+  git commit "$db" -m "push db"
+  git push origin "$dbBranch" -f
+}
 commitData() {
   git config user.name "Automated"
   git config user.email "actions@users.noreply.github.com"
@@ -188,6 +201,7 @@ function run() {
 
   makeDB "$db"
   publishDB "$db"
+  commitDB "$db"
 
 }
 
