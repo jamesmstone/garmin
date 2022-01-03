@@ -84,31 +84,33 @@ function addAllActivity() {
 
 }
 
-makeDB() {
+remakeDB() {
   local db="$1"
-  rm -rf "$db" || true
+  rm -rf "$db"
   addAllActivity "$db"
   sql-utils create-index --if-not-exists "$db" summary activityTypeDTO_typeKey
   sql-utils add-column "$db" summary detailsMetricDescriptors
   sql-utils add-column "$db" summary geoPolylineDTO
   sql-utils add-column "$db" summary heartRateDTOs
-  sql-utils "$db" 'UPDATE summary
-                  SET detailsMetricDescriptors = (
+  sql-utils "$db" 'UPDATE summary SET detailsMetricDescriptors = (
                       SELECT metricDescriptors
                       FROM details
                       WHERE details.activityId = summary.activityId
-                  ),heartRateDTOs = (
+                  );'
+  sql-utils "$db" 'UPDATE summary SET heartRateDTOs = (
                       SELECT heartRateDTOs
                       FROM details
                       WHERE details.activityId = summary.activityId
-                  ),geoPolylineDTO = (
+                      );'
+  sql-utils "$db" 'UPDATE summary SET geoPolylineDTO = (
                       SELECT json(geoPolylineDTO)
                       FROM details
                       WHERE details.activityId = summary.activityId
-                  )
-                  ;'
-  sql-utils "$db" 'create table activityDetailMetrics as
-                   select d.activityId as activityId,
+                  );'
+
+     sql-utils "$db" 'create table activityDetailMetrics as
+                   with query as (
+                   select s.activityId as activityId,
                           s.activityTypeDTO_typeKey as activityTypeDTO_typeKey,
                           json_extract(
                                   m.value,
@@ -118,9 +120,10 @@ makeDB() {
                                               m.value,
                                               '\''$.metrics['\'' || (
                                                   select json_extract(m.value, '\''$.metricsIndex'\'')
-                                                  from summary s,
-                                                       json_each(s.detailsMetricDescriptors) m
+                                                  from summary smry,
+                                                       json_each(smry.detailsMetricDescriptors) m
                                                     where json_extract(m.value, '\''$.key'\'') = '\''directTimestamp'\''
+                                                    and s.activityId = smry.activityId
                                               ) || '\'']'\''
                                           ) / 1000,
                                       '\''unixepoch'\''
@@ -129,33 +132,37 @@ makeDB() {
                                   m.value,
                                   '\''$.metrics['\'' || (
                                       select json_extract(m.value, '\''$.metricsIndex'\'')
-                                      from summary s,
-                                           json_each(s.detailsMetricDescriptors) m
+                                      from summary smry,
+                                           json_each(smry.detailsMetricDescriptors) m
                                         where json_extract(m.value, '\''$.key'\'') = '\''directLongitude'\''
+                                        and s.activityId = smry.activityId
                                   ) || '\'']'\''
                               )                as "directLongitude",
                           json_extract(
                                   m.value,
                                   '\''$.metrics['\'' || (
                                       select json_extract(m.value, '\''$.metricsIndex'\'')
-                                      from summary s,
-                                           json_each(s.detailsMetricDescriptors) m
+                                      from summary smry,
+                                           json_each(smry.detailsMetricDescriptors) m
                                       where json_extract(m.value, '\''$.key'\'') = '\''directLatitude'\''
+                                      and s.activityId = smry.activityId
                                   ) || '\'']'\''
                               )                as "directLatitude",
                           json_extract(
                                   m.value,
                                   '\''$.metrics['\'' || (
                                       select json_extract(m.value, '\''$.metricsIndex'\'')
-                                      from summary s,
-                                           json_each(s.detailsMetricDescriptors) m
+                                      from summary smry,
+                                           json_each(smry.detailsMetricDescriptors) m
                                         where json_extract(m.value, '\''$.key'\'') = '\''directSpeed'\''
+                                        and s.activityId = smry.activityId
                                   ) || '\'']'\''
                               )                as "directSpeed"
                    from summary s
                             inner join details d on d.activityId = s.activityId,
-                        json_each(activitydetailmetrics) m
-                   order by 5'
+                        json_each(d.activitydetailmetrics) m
+                   )
+                   select * from query order by directTimestamp desc'
   sql-utils drop-table "$db" details
   sql-utils create-index --if-not-exists "$db" activityDetailMetrics activityId
   sql-utils create-index --if-not-exists "$db" activityDetailMetrics activityTypeDTO_typeKey
@@ -199,7 +206,7 @@ function run() {
   downloadAll
   commitData
 
-  makeDB "$db"
+  remakeDB "$db"
   publishDB "$db"
   commitDB "$db"
 
