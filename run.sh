@@ -199,7 +199,17 @@ commitData() {
 
 
 function publishDB() {
-    datasette publish vercel "$db" --token "$VERCEL_TOKEN" --project=garminlog --install=datasette-vega
+    datasette \
+     publish vercel \
+     -i \
+    "$db" \
+     --token "$VERCEL_TOKEN" \
+     --project=garminlog \
+     --install=datasette-vega \
+     --setting hash_urls 1 \
+     --setting sql_time_limit_ms 4500 \
+
+
 }
 function run() {
   local db="garmin.db"
