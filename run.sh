@@ -163,7 +163,8 @@ remakeDB() {
                         json_each(d.activitydetailmetrics) m
                    )
                    select * from query order by directTimestamp desc'
-  sql-utils transform "$db" activityDetailMetrics --pk activityId --drop rowid
+  sql-utils transform "$db" activityDetailMetrics --pk activityId --pk directTimestamp
+  sql-utils transform "$db" activityDetailMetrics --drop rowid
   sql-utils drop-table "$db" details
   sql-utils create-index --if-not-exists "$db" activityDetailMetrics activityId
   sql-utils create-index --if-not-exists "$db" activityDetailMetrics activityTypeDTO_typeKey
