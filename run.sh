@@ -137,7 +137,7 @@ remakeDB() {
                                         where json_extract(m.value, '\''$.key'\'') = '\''directLongitude'\''
                                         and s.activityId = smry.activityId
                                   ) || '\'']'\''
-                              )                as "directLongitude",
+                              )                as "longitude",
                           json_extract(
                                   m.value,
                                   '\''$.metrics['\'' || (
@@ -147,7 +147,7 @@ remakeDB() {
                                       where json_extract(m.value, '\''$.key'\'') = '\''directLatitude'\''
                                       and s.activityId = smry.activityId
                                   ) || '\'']'\''
-                              )                as "directLatitude",
+                              )                as "latitude",
                           json_extract(
                                   m.value,
                                   '\''$.metrics['\'' || (
