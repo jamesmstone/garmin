@@ -108,7 +108,7 @@ remakeDB() {
                       WHERE details.activityId = summary.activityId
                   );'
 
-     sql-utils "$db" 'create table activityDetailMetrics as
+  sql-utils "$db" 'create table activityDetailMetrics as
                    with query as (
                    select s.activityId as activityId,
                           s.activityTypeDTO_typeKey as activityTypeDTO_typeKey,
