@@ -1,13 +1,22 @@
+dockerDatasette="datasette"
+
+function buildDatasette() {
+  docker build --tag "$dockerDatasette" --pull --file datasette.Dockerfile .
+}
+
+function datasette() {
+  docker run \
+    -v"$(pwd):/wd" \
+    -p 8001:8001 \
+    -w /wd \
+    "$dockerDatasette" \
+    "$@"
+}
+
 run() {
   local db="garmin.db"
-
-  docker run \
-    -p 8001:8001 \
-    -v"$(pwd):/wd" \
-    -w /wd \
-    datasetteproject/datasette \
-    datasette -p 8001 -h 0.0.0.0 "$db" \
-    --load-extension=spatialite "$@"
+  buildDatasette
+  datasette -p 8001 -h 0.0.0.0 -i "$db"  "$@"
 
 }
 
