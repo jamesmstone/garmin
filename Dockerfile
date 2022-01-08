@@ -1,3 +1,1 @@
-FROM python:alpine
-RUN pip install -U garpy
-ENTRYPOINT ["garpy"]
+FROM ghcr.io/jamesmstone/garpy:latest
