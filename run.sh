@@ -63,6 +63,31 @@ function downloadAll() {
     garpy download --username "$GARMIN_USERNAME" --password "$GARMIN_PASSWORD" "$downloadDir"
 }
 
+function ensureHaveWellnessDate(){
+     local date=${1}
+     local hasDate
+     hasDate=$(sql-utils "$db" "select exists(1) from wellness where date=$date")
+     echo "$hasDate"
+}
+
+function ensureHaveAllWellnessSinceDate() {
+  local today=$(date "+%Y-%m-%d")
+  local startDate=${1}
+  local endDate=${2:-$today}
+
+  local curUnix=$(date -d"$startDate" "+%s")
+  local endUnix=$(date -d"$endDate" "+%s")
+
+  while [[ $curUnix -le $endUnix ]]; do
+    local curDate=$(date -d@"$curUnix" "+%Y-%m-%d")
+    echo "ensuring have: $curDate" >&2
+    ensureHaveWellnessDate "$curDate"
+
+    curUnix=$(date -d@"$(($curUnix + (24 * 60 * 60)))" "+%s")
+
+  done
+}
+
 function addAllActivity() {
     local db=${1}
 
