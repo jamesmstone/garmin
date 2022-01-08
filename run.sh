@@ -28,7 +28,7 @@ function buildGarpy(){
 }
 
 function garpy(){
-    docker run -i  --user "$(id -u):$(id -g)" -v "$(pwd):/wd" -w /wd "$dockerGarpy" run garpy "$@"
+    docker run -i -v "$(pwd)/$downloadDir:/$downloadDir" "$dockerGarpy" run garpy "$@"
 }
 
 function buildSQLUtils() {
