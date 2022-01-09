@@ -8,6 +8,7 @@ downloadDir="data/garmin"
 dockerSQLUtil="sqlite-utils"
 dockerGarpy="garpy"
 dockerDatasette="datasette"
+dockerFitdump="fitdump"
 
 TZ=UTC
 
@@ -31,6 +32,14 @@ function garpy(){
     docker run -i -v "$(pwd)/$downloadDir:/$downloadDir" "$dockerGarpy" run garpy "$@"
 }
 
+function buildFitdump(){
+    docker build --tag "$dockerFitdump" --pull --file fitdump.Dockerfile .
+}
+
+function fitdump(){
+    docker run -i -v "$(pwd):$(pwd)" -w"$(pwd)" "$dockerFitdump" "$@"
+}
+
 function buildSQLUtils() {
   docker build --tag "$dockerSQLUtil" --file sqlite-utils.Dockerfile .
 }
@@ -47,6 +56,7 @@ function sql-utils() {
 
 function buildDocker() {
     buildGarpy &
+    buildFitdump &
     buildSQLUtils &
     buildDatasette &
     wait
@@ -63,17 +73,67 @@ function downloadAll() {
     garpy download --username "$GARMIN_USERNAME" --password "$GARMIN_PASSWORD" "$downloadDir"
 }
 
-function ensureHaveWellnessDate(){
-     local date=${1}
+function ensureHasWellnessTable(){
+     local db=${1}
+     sql-utils create-table "$db" "wellness" date TEXT file TEXT --pk date --pk file --ignore
+}
+function hasWellnessDate(){
+     local db=${1}
+     local date=${2}
+
+     ensureHasWellnessTable "$db"
      local hasDate
-     hasDate=$(sql-utils "$db" "select exists(1) from wellness where date=$date")
+     hasDate=$(sql-utils "$db" --raw "select exists( select true from wellness where date='$date');")
      echo "$hasDate"
 }
 
+function downloadWellnessDate(){
+  local date=${1}
+  garpy download --username "$GARMIN_USERNAME" --password "$GARMIN_PASSWORD" -f "wellness" -d "$date" "$downloadDir"
+}
+function storeWellnessDate(){
+  local db=${1}
+  local date=${2}
+
+  downloadWellnessDate "$date"
+  local contents
+  contents=$(unzip -lq "$downloadDir/$date.zip")
+  local files
+  files=$(echo "$contents" | awk 'NR>2 && $4!=""{print($4)}')
+  for file in $files
+  do
+    echo "$file"
+    local f="$downloadDir/$date-$file"
+    unzip -p "$downloadDir/$date.zip" "$file" > "$f"
+    fitdump -t json "$f" |
+      jq "{\"file\":\"$file\",\"date\":\"$date\",\"data\":.}" |
+      sql-utils insert "$db" "wellness" - \
+             --flatten \
+             --alter \
+             --pk date \
+             --pk file \
+             --replace
+  done;
+
+}
+function ensureHaveWellnessDate(){
+     local db=${1}
+     local date=${2}
+     if [ $(hasWellnessDate "$db" "$date") -eq 1 ]; then
+        echo "hasWellnessDate"
+        return 0;
+     fi
+     echo "Missing wellness for: $date" >&2
+     storeWellnessDate "$db" "$date"
+     commitData
+}
+
 function ensureHaveAllWellnessSinceDate() {
+  local db=${1}
+
   local today=$(date "+%Y-%m-%d")
-  local startDate=${1}
-  local endDate=${2:-$today}
+  local startDate=${2}
+  local endDate=${3:-$today}
 
   local curUnix=$(date -d"$startDate" "+%s")
   local endUnix=$(date -d"$endDate" "+%s")
@@ -81,7 +141,7 @@ function ensureHaveAllWellnessSinceDate() {
   while [[ $curUnix -le $endUnix ]]; do
     local curDate=$(date -d@"$curUnix" "+%Y-%m-%d")
     echo "ensuring have: $curDate" >&2
-    ensureHaveWellnessDate "$curDate"
+    ensureHaveWellnessDate "$db" "$curDate"
 
     curUnix=$(date -d@"$(($curUnix + (24 * 60 * 60)))" "+%s")
 
@@ -239,7 +299,7 @@ function publishDB() {
 }
 function run() {
   local db="garmin.db"
-
+  ensureHaveAllWellnessSinceDate "$db" "2021-01-01"
   downloadAll
   commitData
 
