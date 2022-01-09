@@ -125,6 +125,7 @@ function ensureHaveWellnessDate(){
      fi
      echo "Missing wellness for: $date" >&2
      storeWellnessDate "$db" "$date"
+     sql-utils optimize "$db"
      commitData
 }
 
