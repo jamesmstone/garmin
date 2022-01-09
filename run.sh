@@ -299,7 +299,7 @@ function publishDB() {
 }
 function run() {
   local db="garmin.db"
-  ensureHaveAllWellnessSinceDate "$db" "2021-01-01"
+  ensureHaveAllWellnessSinceDate "$db" "2019-01-01"
   downloadAll
   commitData
 
