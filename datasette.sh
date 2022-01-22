@@ -14,9 +14,10 @@ function datasette() {
 }
 
 run() {
-  local db="garmin.db"
+  local activity_db="garmin.db"
+  local wellness_db="wellness.db"
   buildDatasette
-  datasette -p 8001 -h 0.0.0.0 -i "$db"  "$@"
+  datasette -p 8001 -h 0.0.0.0 -i "$activity_db" "$wellness_db"  "$@"
 
 }
 

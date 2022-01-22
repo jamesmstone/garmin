@@ -8,36 +8,49 @@ downloadDir="data/garmin"
 dockerSQLUtil="sqlite-utils"
 dockerGarpy="garpy"
 dockerDatasette="datasette"
-dockerFitdump="fitdump"
+dockerProcess="process"
 
 TZ=UTC
 
-function buildDatasette(){
-      docker build --tag "$dockerDatasette" --pull --file datasette.Dockerfile .
+function buildDatasette() {
+  docker build --tag "$dockerDatasette" --pull --file datasette.Dockerfile .
 }
 
 function datasette() {
   docker run \
     -v"$(pwd):/wd" \
+    -e FLY_ACCESS_TOKEN="${FLY_ACCESS_TOKEN}" \
     -w /wd \
     "$dockerDatasette" \
     "$@"
 }
 
-function buildGarpy(){
-    docker build --tag "$dockerGarpy" .
+function buildGarpy() {
+  docker build --tag "$dockerGarpy" .
 }
 
-function garpy(){
-    docker run -i -v "$(pwd)/$downloadDir:/$downloadDir" "$dockerGarpy" run garpy "$@"
+function garpy() {
+  docker run -i -v "$(pwd)/$downloadDir:/$downloadDir" "$dockerGarpy" run garpy "$@"
 }
 
-function buildFitdump(){
-    docker build --tag "$dockerFitdump" --pull --file fitdump.Dockerfile .
+function buildProcess() {
+  docker build --tag "$dockerProcess" proccess/
 }
 
-function fitdump(){
-    docker run -i -v "$(pwd):$(pwd)" -w"$(pwd)" "$dockerFitdump" "$@"
+function process() {
+  local db=$1
+  local startDate=$2
+  docker run \
+    -i \
+    -v "$(pwd):/wd" \
+    -w "/wd" \
+    -e username="$GARMIN_USERNAME" \
+    -e password="$GARMIN_PASSWORD" \
+    -e start="$startDate" \
+    -e db="$db" \
+    -e TC="UTC" \
+    -u "$(id -u):$(id -g)" \
+    "$dockerProcess"
 }
 
 function buildSQLUtils() {
@@ -55,118 +68,46 @@ function sql-utils() {
 }
 
 function buildDocker() {
-    buildGarpy &
-    buildFitdump &
-    buildSQLUtils &
-    buildDatasette &
-    wait
+  buildGarpy &
+  buildSQLUtils &
+  buildDatasette &
+  buildProcess &
+  wait
 }
-
 
 function ensureDownloadDir() {
   mkdir -p "$downloadDir"
 }
 
-
 function downloadAll() {
-    ensureDownloadDir
-    garpy download --username "$GARMIN_USERNAME" --password "$GARMIN_PASSWORD" "$downloadDir"
-}
-
-function ensureHasWellnessTable(){
-     local db=${1}
-     sql-utils create-table "$db" "wellness" date TEXT file TEXT --pk date --pk file --ignore
-}
-function hasWellnessDate(){
-     local db=${1}
-     local date=${2}
-
-     ensureHasWellnessTable "$db"
-     local hasDate
-     hasDate=$(sql-utils "$db" --raw "select exists( select true from wellness where date='$date');")
-     echo "$hasDate"
-}
-
-function downloadWellnessDate(){
-  local date=${1}
-  garpy download --username "$GARMIN_USERNAME" --password "$GARMIN_PASSWORD" -f "wellness" -d "$date" "$downloadDir"
-}
-function storeWellnessDate(){
-  local db=${1}
-  local date=${2}
-
-  downloadWellnessDate "$date"
-  local contents
-  contents=$(unzip -lq "$downloadDir/$date.zip")
-  local files
-  files=$(echo "$contents" | awk 'NR>2 && $4!=""{print($4)}')
-  for file in $files
-  do
-    echo "$file"
-    local f="$downloadDir/$date-$file"
-    unzip -p "$downloadDir/$date.zip" "$file" > "$f"
-    fitdump -t json "$f" |
-      jq "{\"file\":\"$file\",\"date\":\"$date\",\"data\":.}" |
-      sql-utils insert "$db" "wellness" - \
-             --flatten \
-             --alter \
-             --pk date \
-             --pk file \
-             --replace
-  done;
-
-}
-function ensureHaveWellnessDate(){
-     local db=${1}
-     local date=${2}
-     if [ $(hasWellnessDate "$db" "$date") -eq 1 ]; then
-        echo "hasWellnessDate"
-        return 0;
-     fi
-     echo "Missing wellness for: $date" >&2
-     storeWellnessDate "$db" "$date"
-     sql-utils optimize "$db"
-     commitData
+  ensureDownloadDir
+  garpy download --username "$GARMIN_USERNAME" --password "$GARMIN_PASSWORD" "$downloadDir"
 }
 
 function ensureHaveAllWellnessSinceDate() {
   local db=${1}
-
-  local today=$(date "+%Y-%m-%d")
   local startDate=${2}
-  local endDate=${3:-$today}
-
-  local curUnix=$(date -d"$startDate" "+%s")
-  local endUnix=$(date -d"$endDate" "+%s")
-
-  while [[ $curUnix -le $endUnix ]]; do
-    local curDate=$(date -d@"$curUnix" "+%Y-%m-%d")
-    echo "ensuring have: $curDate" >&2
-    ensureHaveWellnessDate "$db" "$curDate"
-
-    curUnix=$(date -d@"$(($curUnix + (24 * 60 * 60)))" "+%s")
-
-  done
+  process "$db" "$startDate"
 }
 
 function addAllActivity() {
-    local db=${1}
+  local db=${1}
 
-    find "$downloadDir" -name '*summary.json' -exec jq . -c {} + |
-      sql-utils insert "$db" "summary" - \
-       --flatten \
-       --alter \
-       --pk=activityId \
-       --replace \
-       --nl
+  find "$downloadDir" -name '*summary.json' -exec jq . -c {} + |
+    sql-utils insert "$db" "summary" - \
+      --flatten \
+      --alter \
+      --pk=activityId \
+      --replace \
+      --nl
 
-    find "$downloadDir" -name '*details.json' -exec jq . -c {} + |
-      sql-utils insert "$db" "details" - \
-       --flatten \
-       --alter \
-       --pk=activityId \
-       --replace \
-       --nl
+  find "$downloadDir" -name '*details.json' -exec jq . -c {} + |
+    sql-utils insert "$db" "details" - \
+      --flatten \
+      --alter \
+      --pk=activityId \
+      --replace \
+      --nl
 
 }
 
@@ -255,8 +196,8 @@ remakeDB() {
   sql-utils create-index --if-not-exists "$db" activityDetailMetrics activityId
   sql-utils create-index --if-not-exists "$db" activityDetailMetrics activityTypeDTO_typeKey
   sql-utils create-index --if-not-exists "$db" activityDetailMetrics directTimestamp
-  sql-utils create-index --if-not-exists "$db" activityDetailMetrics --  -directSpeed activityTypeDTO_typeKey
-  sql-utils create-index --if-not-exists "$db" activityDetailMetrics --  activityTypeDTO_typeKey -directSpeed
+  sql-utils create-index --if-not-exists "$db" activityDetailMetrics -- -directSpeed activityTypeDTO_typeKey
+  sql-utils create-index --if-not-exists "$db" activityDetailMetrics -- activityTypeDTO_typeKey -directSpeed
   sql-utils add-foreign-key "$db" activityDetailMetrics activityId summary activityId --ignore
   sql-utils index-foreign-keys "$db"
   sql-utils analyze-tables "$db" --save
@@ -271,39 +212,45 @@ commitDB() {
   git checkout --orphan "$dbBranch"
   mv "$db" "$tempDB"
   rm -rf *
-  mv "$tempDB" "$db"
-  git add "$db"
-  git commit "$db" -m "push db"
+  tar -cvzf "$db.tar.gz" "$tempDB"
+  git add "$db.tar.gz"
+  git commit "$db.tar.gz" -m "push db"
   git push origin "$dbBranch" -f
+}
+
+getDB() {
+  local dbBranch="db"
+  local db="$1"
+  git show "$dbBranch:$db.tar.gz" | tar -xf -C . - || return 0
 }
 commitData() {
   git config user.name "Automated"
   git config user.email "actions@users.noreply.github.com"
   git add -A
   timestamp=$(date -u)
-  git commit -m "Latest data: ${timestamp}" || exit 0
+  git commit -m "Latest data: ${timestamp}" || true
   git push
 }
 
-
 function publishDB() {
-    datasette \
-     publish vercel \
+  local db=$1
+  datasette \
+    publish fly \
     "$db" \
-     --token "$VERCEL_TOKEN" \
-     --project=garminlog \
-     --install=datasette-vega \
-     --install=datasette-cluster-map \
-     --setting sql_time_limit_ms 4500
+    --app=garminlog \
+    --install=datasette-vega \
+    --install=datasette-cluster-map \
+    --setting sql_time_limit_ms 4500
 
 
 }
+
 function run() {
-  local db="garmin.db"
- # ensureHaveAllWellnessSinceDate "$db" "2019-01-01"
   downloadAll
   commitData
-
+  local db="garmin.db"
+  getDB "$db"
+  ensureHaveAllWellnessSinceDate "$db" "2015-01-01"
   remakeDB "$db"
   publishDB "$db"
   commitDB "$db"
