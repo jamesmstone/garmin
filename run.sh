@@ -113,7 +113,8 @@ function addAllActivity() {
 
 remakeDB() {
   local db="$1"
-  rm -rf "$db"
+  sql-utils query "$db" "DROP table if exists summary;"
+  sql-utils query "$db" "DROP table if exists activityDetailMetrics;"
   addAllActivity "$db"
   sql-utils create-index --if-not-exists "$db" summary activityTypeDTO_typeKey
   sql-utils add-column "$db" summary detailsMetricDescriptors
@@ -249,10 +250,10 @@ function publishDB() {
 
 function run() {
   downloadAll
-  commitData
+#  commitData
   local db="garmin.db"
   getDB "$db"
-  ensureHaveAllWellnessSinceDate "$db" "2015-01-01"
+#  ensureHaveAllWellnessSinceDate "$db" "2015-01-01"
   remakeDB "$db"
   publishDB "$db"
   commitDB "$db"
