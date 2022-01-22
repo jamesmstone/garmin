@@ -219,8 +219,9 @@ commitDB() {
 }
 
 getDB() {
-  local dbBranch="db"
+  local dbBranch="origin/db"
   local db="$1"
+  git fetch "$dbBranch"
   git show "$dbBranch:$db.tar.gz" | tar -xf - || return 0
 }
 commitData() {
