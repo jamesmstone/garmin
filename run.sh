@@ -251,7 +251,7 @@ function run() {
   getDB "$db"
   ensureHaveAllWellnessSinceDate "$db" "2015-01-01"
   remakeDB "$db"
-#  publishDB "$db"
+  publishDB "$db"
   commitDB "$db"
 
 }
