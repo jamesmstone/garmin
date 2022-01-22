@@ -221,7 +221,7 @@ commitDB() {
 getDB() {
   local dbBranch="db"
   local db="$1"
-  git show "$dbBranch:$db.tar.gz" | tar -xf -C . - || return 0
+  git show "$dbBranch:$db.tar.gz" | tar -xf - || return 0
 }
 commitData() {
   git config user.name "Automated"
