@@ -240,9 +240,7 @@ function publishDB() {
     --app=garminlog \
     --install=datasette-vega \
     --install=datasette-cluster-map \
-    --install=datasette-graphql \
-    --install=datasette-seaborn
-
+    --install=datasette-graphql
 
 }
 
