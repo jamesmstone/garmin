@@ -222,7 +222,7 @@ getDB() {
   local dbBranch="db"
   local db="$1"
   git fetch origin "$dbBranch"
-  git show "origin/$dbBranch:$db.tar.gz" | tar -xf - || return 0
+  git show "origin/$dbBranch:$db.tar.gz" | tar -zxf - || return 0
 }
 commitData() {
   git config user.name "Automated"
