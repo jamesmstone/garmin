@@ -212,7 +212,8 @@ commitDB() {
   git checkout --orphan "$dbBranch"
   mv "$db" "$tempDB"
   rm -rf *
-  tar -cvzf "$db.tar.gz" "$tempDB"
+  mv "$tempDB" "$db"
+  tar -cvzf "$db.tar.gz" "$db"
   git add "$db.tar.gz"
   git commit "$db.tar.gz" -m "push db"
   git push origin "$dbBranch" -f
