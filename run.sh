@@ -241,8 +241,7 @@ function publishDB() {
     --install=datasette-vega \
     --install=datasette-cluster-map \
     --install=datasette-graphql \
-    --install=datasette-seaborn \
-    --setting sql_time_limit_ms 4500
+    --install=datasette-seaborn
 
 
 }
