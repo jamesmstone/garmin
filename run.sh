@@ -219,10 +219,10 @@ commitDB() {
 }
 
 getDB() {
-  local dbBranch="origin/db"
+  local dbBranch="db"
   local db="$1"
-  git fetch "$dbBranch"
-  git show "$dbBranch:$db.tar.gz" | tar -xf - || return 0
+  git fetch origin "$dbBranch"
+  git show "origin/$dbBranch:$db.tar.gz" | tar -xf - || return 0
 }
 commitData() {
   git config user.name "Automated"
