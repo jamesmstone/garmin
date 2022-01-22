@@ -9,6 +9,7 @@ import pytz
 import datetime
 import requests
 import sqlite3
+from memo import memo
 
 user_agent = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36"
 
@@ -126,13 +127,21 @@ def has_table(table, db):
     return table in db.table_names()
 
 
+@memo
+def get_table_dates(column, table, db):
+    if not has_table(table, db):
+        return list()
+
+    query = "select distinct " + column + " as exist from " + table + ";"
+    return [date["exist"] for date in db.query(query)]
+
+
 def date_exists_table(date_str, column, table, db):
     try:
-        query = "select exists( select true from " + table + " where " + column + "=? ) as exist "
-        print(query, flush=True)
-        return has_table(table, db) and next(
-            db.query(query, [date_str]))[
-            "exist"] == 1
+        dates = get_table_dates(column, table, db)
+        if len(dates) == 0:
+            return False
+        return date_str in dates
     except sqlite3.OperationalError:
         return False
 
