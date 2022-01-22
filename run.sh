@@ -240,6 +240,7 @@ function publishDB() {
     --app=garminlog \
     --install=datasette-vega \
     --install=datasette-cluster-map \
+    --install=datasette-graphql \
     --setting sql_time_limit_ms 4500
 
 
