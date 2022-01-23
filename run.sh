@@ -250,10 +250,10 @@ function publishDB() {
 
 function run() {
   downloadAll
-#  commitData
+  commitData
   local db="garmin.db"
   getDB "$db"
-#  ensureHaveAllWellnessSinceDate "$db" "2015-01-01"
+  ensureHaveAllWellnessSinceDate "$db" "2015-01-01"
   remakeDB "$db"
   publishDB "$db"
   commitDB "$db"
