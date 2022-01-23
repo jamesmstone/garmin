@@ -68,6 +68,8 @@ def delete_above(date, db):
 def transform(db):
     if not has_table("wellness", db):
         return
+    
+    column_names=db["wellness"].columns_dict.keys()
     db.executescript("""
 create table if not exists heart_rate
 (
@@ -86,6 +88,9 @@ create table if not exists activity
     distance       int,
     activity_type  text
 );
+""")
+    if "heart_rate (bpm)" in column_names:
+        db.executescript("""
 insert into heart_rate(unix_timestamp, heart_rate)
 select strftime('%s', datetime(actual_timestamp, 'unixepoch')) unix_timestamp, "heart_rate (bpm)"
 from wellness
@@ -94,7 +99,10 @@ where "heart_rate (bpm)" is not null
   and actual_timestamp is not null
 order by 1 desc
 on conflict do nothing;
-
+""")
+        
+    if "stress_level_time" in column_names:
+        db.executescript("""
 insert into stress_level(unix_timestamp, stress_level)
 select strftime('%s', datetime(stress_level_time)) unix_timestamp, stress_level_value stress_level
 from wellness
@@ -102,7 +110,10 @@ where stress_level_value is not null
   and stress_level_time is not null
 order by 1 desc
 on conflict do nothing;
-
+""")
+        
+    if "activity_type" in column_names:
+        db.executescript("""
 insert into activity(unix_timestamp, steps, distance, activity_type)
 select strftime('%s', datetime(timestamp)) unix_timestamp,
        "steps (steps)"                     steps,
@@ -112,7 +123,9 @@ from wellness
 where activity_type is not null
 order by 1 desc
 on conflict do nothing;
-
+""")
+ 
+    db.executescript("""
 create index if not exists heart_rate_time on heart_rate (unix_timestamp, heart_rate);
 create index if not exists stress_level_time on stress_level (unix_timestamp, stress_level);
 create index if not exists activity_time on activity (unix_timestamp);
