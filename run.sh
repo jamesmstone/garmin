@@ -245,7 +245,6 @@ function publishDB() {
     --install=datasette-vega \
     --install=datasette-cluster-map \
     --install=datasette-graphql
-
 }
 
 function run() {
@@ -255,7 +254,7 @@ function run() {
   getDB "$db"
   ensureHaveAllWellnessSinceDate "$db" "2015-01-01"
   remakeDB "$db"
-#  publishDB "$db"
+  publishDB "$db"
   commitDB "$db"
 
 }
