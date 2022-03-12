@@ -24,5 +24,7 @@ jobs:
         GARMIN_PASSWORD: ${{ secrets.GARMIN_PASSWORD }}
         SSHPASS: ${{secrets.SSHPASS }}
       run: |-
-        sshpass ssh -fTND 8080 pi@raspberrypi
+        mkdir -p ~/.ssh/
+        ssh-keyscan -H pi >> ~/.ssh/known_hosts
+        sshpass ssh -fTND 8080 pi@pi
         ./run.sh
