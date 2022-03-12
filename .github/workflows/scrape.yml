@@ -12,6 +12,10 @@ jobs:
     steps:
     - name: Check out this repo
       uses: actions/checkout@v2
+    - name: Tailscale
+      uses: tailscale/github-action@v1
+      with:
+          authkey: ${{ secrets.TAILSCALE_AUTHKEY }}
     - name: Fetch latest data
       env:
         FLY_ACCESS_TOKEN: ${{ secrets.FLY_ACCESS_TOKEN }}
