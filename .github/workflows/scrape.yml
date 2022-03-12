@@ -24,7 +24,7 @@ jobs:
         GARMIN_PASSWORD: ${{ secrets.GARMIN_PASSWORD }}
         SSHPASS: ${{secrets.SSHPASS }}
       run: |-
-        apt update && apt install sshpass -y
+        sudo apt update && sudo apt install sshpass -y
         ssh-keyscan -H raspberrypi >> ~/.ssh/known_hosts
         sshpass ssh -D 8080 pi@raspberrypi
         ./run.sh
