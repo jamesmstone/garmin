@@ -26,5 +26,5 @@ jobs:
       run: |-
         mkdir -p ~/.ssh/
         ssh-keyscan -H pi >> ~/.ssh/known_hosts
-        sudo sshpass -p $SSHPASS ssh -o StrictHostKeyChecking=no -fNT -D 8080 pi@pi
+        sudo sshpass -e ssh -o StrictHostKeyChecking=no -fNT -D 8080 pi@pi
         ./run.sh
