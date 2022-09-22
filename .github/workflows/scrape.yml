@@ -13,7 +13,7 @@ jobs:
     - name: Check out this repo
       uses: actions/checkout@v2
     - name: Tailscale
-      uses: tailscale/github-action@main
+      uses: tailscale/github-action
       with:
           authkey: ${{ secrets.TAILSCALE_AUTHKEY }}
           args: --exit-node=100.97.181.28
