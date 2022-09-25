@@ -16,7 +16,7 @@ jobs:
       uses: tailscale/github-action
       with:
           authkey: ${{ secrets.TAILSCALE_AUTHKEY }}
-          args: --exit-node=100.97.181.28
+          args: " --exit-node=100.97.181.28"
     - name: Fetch latest data
       env:
         FLY_ACCESS_TOKEN: ${{ secrets.FLY_ACCESS_TOKEN }}
