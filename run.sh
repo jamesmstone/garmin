@@ -260,5 +260,6 @@ function run() {
 }
 
 buildDocker
-
-run "$@"
+if [ "$1" != "--only-build" ]; then
+  run "$@"
+fi
