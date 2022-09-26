@@ -1,6 +1,5 @@
-FROM python:alpine
+FROM python:slim
 ENV TZ=UTC
-RUN apk add -U tzdata && echo $TZ > /etc/timezone
 WORKDIR /usr/src/app
 
 COPY requirements.txt ./
