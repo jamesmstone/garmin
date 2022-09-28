@@ -27,6 +27,7 @@ jobs:
         docker network create --subnet 172.20.0.0/24 wgnet
         ip route show
         echo "ip rpute:"
+        docker pull curlimages/curl:7.81.0
         docker run --network wgnet --device /dev/net/tun --cap-add=NET_ADMIN --rm curlimages/curl:7.81.0 -L -vvvv https://tailscale.com & 
         sleep 10
         ip route show
