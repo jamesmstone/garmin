@@ -26,7 +26,11 @@ jobs:
         echo "outside works ^, now inside docker:"
         docker network create --subnet 172.20.0.0/24 wgnet
         ip route show
-        docker run --network wgnet --device /dev/net/tun --cap-add=NET_ADMIN --rm curlimages/curl:7.81.0 -L -vvvv https://tailscale.com
+        echo "ip rpute:"
+        docker run --network wgnet --device /dev/net/tun --cap-add=NET_ADMIN --rm curlimages/curl:7.81.0 -L -vvvv https://tailscale.com & 
+        sleep 10
+        ip route show
+
     - name: Fetch latest data
       env:
         FLY_ACCESS_TOKEN: ${{ secrets.FLY_ACCESS_TOKEN }}
