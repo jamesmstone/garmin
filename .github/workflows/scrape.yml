@@ -20,7 +20,7 @@ jobs:
       uses: tailscale/github-action@main
       with:
           authkey: ${{ secrets.TAILSCALE_AUTHKEY }}
-          args: " --exit-node=100.97.181.28"
+          args: " --exit-node=100.97.181.28 --tun=userspace-networking"
     - name: curl
       run: |-
         ip route show
