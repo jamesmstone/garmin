@@ -23,6 +23,8 @@ jobs:
     - name: curl
       run: |-
         curl -vvvv https://tailscale.com
+        echo "outside works ^, now inside docker:"
+        docker run --device /dev/net/tun --cap-add=NET_ADMIN --rm curlimages/curl:7.81.0 -L -vvvv https://tailscale.com
     - name: Fetch latest data
       env:
         FLY_ACCESS_TOKEN: ${{ secrets.FLY_ACCESS_TOKEN }}
