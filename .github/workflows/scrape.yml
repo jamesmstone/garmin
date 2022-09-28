@@ -30,6 +30,7 @@ jobs:
         docker run --network wgnet --device /dev/net/tun --cap-add=NET_ADMIN --rm curlimages/curl:7.81.0 -L -vvvv https://tailscale.com & 
         sleep 10
         ip route show
+        wait 
 
     - name: Fetch latest data
       env:
