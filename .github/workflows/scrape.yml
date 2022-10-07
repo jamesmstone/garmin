@@ -16,6 +16,7 @@ jobs:
       run: |-
         ./run.sh --only-build  
         ip route show
+        ip link
     - name: Tailscale
       uses: tailscale/github-action@main
       with:
@@ -24,6 +25,7 @@ jobs:
     - name: curl
       run: |-
         ip route show
+        ip link
         echo "outside works ^, now inside docker:"
         docker network create --subnet 172.20.0.0/24 wgnet
         ip route show
