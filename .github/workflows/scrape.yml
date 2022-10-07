@@ -23,13 +23,15 @@ jobs:
     - name: curl
       run: |-
         docker pull curlimages/curl:7.81.0
+        cat /etc/docker/daemon.json
         echo '{ "mtu": 1280 }' | sudo tee /etc/docker/daemon.json
+        cat /etc/docker/daemon.json
         sudo  systemctl restart docker
         echo "restarted"
         sudo systemctl stop docker
         echo "stopped"
         sudo systemctl start docker
-        echo "startted"
+        echo "started"
         docker run --rm curlimages/curl:7.81.0 -L -vvvv https://tailscale.com 
         echo "outside curl:"
         curl:7.81.0 -L -vvvv https://tailscale.com 
