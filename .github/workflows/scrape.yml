@@ -23,9 +23,10 @@ jobs:
     - name: curl
       run: |-
         docker pull curlimages/curl:7.81.0
-        cat /etc/docker/daemon.json
-        echo '{ "mtu": 1280 }' | sudo tee /etc/docker/daemon.json
-        cat /etc/docker/daemon.json
+        temp=$(mktemp)
+        jq '. + {"mtu": 1280 }'  < "/etc/docker/daemon.json" > "$temp"
+        sudo mv "$temp" "/etc/docker/daemon.json"
+        cat "/etc/docker/daemon.json"
         sudo  systemctl restart docker
         echo "restarted"
         sudo systemctl stop docker
