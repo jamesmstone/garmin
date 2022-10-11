@@ -29,11 +29,6 @@ jobs:
         cat "/etc/docker/daemon.json"
         sudo  systemctl restart docker
         echo "restarted"
-        sudo systemctl stop docker
-        echo "stopped"
-        docker run --rm curlimages/curl:7.81.0 -L -vvvv https://tailscale.com 
-        sudo systemctl start docker
-        echo "started"
         docker run --rm curlimages/curl:7.81.0 -L -vvvv https://tailscale.com 
         echo "outside curl:"
         curl:7.81.0 -L -vvvv https://tailscale.com 
