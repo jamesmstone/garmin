@@ -19,7 +19,7 @@ jobs:
       uses: tailscale/github-action@main
       with:
           authkey: ${{ secrets.TAILSCALE_AUTHKEY }}
-          args: " --exit-node=100.97.181.28"
+          args: " --exit-node=100.97.181.28 --exit-node-allow-lan-access=true"
     - name: curl
       run: |-
         docker pull curlimages/curl:7.81.0
