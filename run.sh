@@ -255,7 +255,9 @@ function run() {
   ensureHaveAllWellnessSinceDate "$db" "2015-01-01"
   remakeDB "$db"
   commitDB "$db"
-  publishDB "$db" "garmin"
+  sql-utils "$db" "select * from heart_rate order by 1 desc" |
+    sql-utils insert "heart_rate.db" "heart_rate"
+  publishDB "heart_rate.db" "garmin_heart_rate"
 
 }
 
