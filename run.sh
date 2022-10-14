@@ -19,7 +19,7 @@ function buildDatasette() {
 function datasette() {
   docker run \
     -v"$(pwd):/wd" \
-    -e FLY_ACCESS_TOKEN="${FLY_ACCESS_TOKEN}" \
+    -e VERCEL_TOKEN="${VERCEL_TOKEN}" \
     -w /wd \
     "$dockerDatasette" \
     "$@"
@@ -243,6 +243,7 @@ function publishDB() {
     publish vercel \
     "$db" \
     "--app=$app" \
+    --token $VERCEL_TOKEN \
     --install=datasette-vega \
     --install=datasette-cluster-map
 }
