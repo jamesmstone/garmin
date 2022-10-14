@@ -34,5 +34,4 @@ jobs:
         GARMIN_USERNAME: ${{ secrets.GARMIN_USERNAME }}
         GARMIN_PASSWORD: ${{ secrets.GARMIN_PASSWORD }}
       run: |-
-        docker run --rm curlimages/curl:7.81.0 -L --silent  https://ifconfig.me
         ./run.sh
