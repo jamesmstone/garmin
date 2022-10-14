@@ -256,7 +256,9 @@ function run() {
   remakeDB "$db"
   commitDB "$db"
   sql-utils "$db" "select * from heart_rate order by 1 desc" |
-    sql-utils insert "heart_rate.db" "heart_rate"
+    sql-utils insert "heart_rate.db" "heart_rate" -
+  sql-utils create-index --if-not-exists  "heart_rate.db" "heart_rate" "unix_timestamp"
+  sql-utils optimize "heart_rate.db" "heart_rate" -
   publishDB "heart_rate.db" "garmin_heart_rate"
 
 }
