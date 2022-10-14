@@ -238,13 +238,13 @@ commitData() {
 
 function publishDB() {
   local db=$1
+  local app=$2
   datasette \
-    publish fly \
+    publish vercel \
     "$db" \
-    --app=garminlog \
+    "--app=$app" \
     --install=datasette-vega \
-    --install=datasette-cluster-map \
-    --install=datasette-graphql
+    --install=datasette-cluster-map
 }
 
 function run() {
@@ -255,7 +255,7 @@ function run() {
   ensureHaveAllWellnessSinceDate "$db" "2015-01-01"
   remakeDB "$db"
   commitDB "$db"
-  publishDB "$db"
+  publishDB "$db" "garmin"
 
 }
 
