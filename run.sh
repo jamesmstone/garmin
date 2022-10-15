@@ -268,7 +268,11 @@ function run() {
   ensureHaveAllWellnessSinceDate "$db" "2015-01-01"
   remakeDB "$db"
   commitDB "$db"
-  publishTable "$db" "heart_rate" "garmin-heart-rate"
+  publishTable "$db" "heart_rate" "garmin-heart-rate" &
+  publishTable "$db" "activity" "garmin-activity" &
+  publishTable "$db" "stress_level" "garmin-stress" &
+  wait
+  
 
 }
 
