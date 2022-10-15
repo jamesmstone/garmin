@@ -236,7 +236,7 @@ commitData() {
   git push
 }
 
-function publishDB() {
+publishDB() {
   local db=$1
   local app=$2
   datasette \
@@ -248,6 +248,18 @@ function publishDB() {
     --install=datasette-cluster-map
 }
 
+publishTable() {
+  local db=$1
+  local table=$2
+  local app=$3
+  local tableDb="$table.db"
+  sql-utils "$db" "select * from $table order by 1 desc" |
+    sql-utils insert "$tableDb" "$table" -
+  sql-utils create-index --if-not-exists "$tableDb" "$table" "unix_timestamp"
+  sql-utils optimize "$tableDb"
+  publishDB "$tableDb" "$app"
+}
+
 function run() {
   downloadAll
   commitData
@@ -256,11 +268,7 @@ function run() {
   ensureHaveAllWellnessSinceDate "$db" "2015-01-01"
   remakeDB "$db"
   commitDB "$db"
-  sql-utils "$db" "select * from heart_rate order by 1 desc" |
-    sql-utils insert "heart_rate.db" "heart_rate" -
-  sql-utils create-index --if-not-exists  "heart_rate.db" "heart_rate" "unix_timestamp"
-  sql-utils optimize "heart_rate.db"
-  publishDB "heart_rate.db" "garmin_heart_rate"
+  publishTable "$db" "heart_rate" "garmin-heart-rate"
 
 }
 
