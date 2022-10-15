@@ -244,6 +244,7 @@ publishDB() {
     "$db" \
     "--project=$app" \
     --token $VERCEL_TOKEN \
+    --setting sql_time_limit_ms 3500 \
     --install=datasette-vega \
     --install=datasette-cluster-map
 }
