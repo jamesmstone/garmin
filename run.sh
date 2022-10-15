@@ -242,7 +242,7 @@ function publishDB() {
   datasette \
     publish vercel \
     "$db" \
-    "--app=$app" \
+    "--project=$app" \
     --token $VERCEL_TOKEN \
     --install=datasette-vega \
     --install=datasette-cluster-map
