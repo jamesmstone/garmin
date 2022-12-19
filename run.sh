@@ -34,7 +34,7 @@ function garpy() {
 }
 
 function buildProcess() {
-  docker build --tag "$dockerProcess" proccess/
+  docker build --tag "$dockerProcess" process/
 }
 
 function process() {
