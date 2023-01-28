@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml
+  xsi:schemaLocation="http://earth.google.com/kml/2.1 http://earth.google.com/kml2.1.xsd"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://earth.google.com/kml/2.1">
+  <Folder>
+    <name>Treadmill Running</name>
+    <Folder>
+      <name>Laps</name>
+      <description>Laps, start and end splits recorded in the activity.</description>
+      <Placemark>
+        <name>Lap 1</name>
+        <description>&lt;table width = "320"&gt;&lt;tr&gt;&lt;td&gt;Time:&lt;/td&gt;&lt;td&gt;00:03:33&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Distance:&lt;/td&gt;&lt;td&gt;1 Kilometers &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Elevation Gain:&lt;/td&gt;&lt;td&gt;--&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Elevation Loss:&lt;/td&gt;&lt;td&gt;--&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Max Speed:&lt;/td&gt;&lt;td&gt;18.57 Kilometers per Hour&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</description>
+        <Style>
+          <IconStyle>
+            <scale>1.0</scale>
+            <Icon>
+              <href>http://maps.google.com/mapfiles/kml/shapes/flag.png</href>
+            </Icon>
+            <hotSpot x="0.45" xunits="fraction" y="0.0" yunits="fraction"/>
+          </IconStyle>
+        </Style>
+        <Point>
+          <coordinates>null,null</coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Lap 2</name>
+        <description>&lt;table width = "320"&gt;&lt;tr&gt;&lt;td&gt;Time:&lt;/td&gt;&lt;td&gt;00:04:26&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Distance:&lt;/td&gt;&lt;td&gt;1 Kilometers &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Elevation Gain:&lt;/td&gt;&lt;td&gt;--&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Elevation Loss:&lt;/td&gt;&lt;td&gt;--&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Max Speed:&lt;/td&gt;&lt;td&gt;18.71 Kilometers per Hour&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</description>
+        <Style>
+          <IconStyle>
+            <scale>1.0</scale>
+            <Icon>
+              <href>http://maps.google.com/mapfiles/kml/shapes/flag.png</href>
+            </Icon>
+            <hotSpot x="0.45" xunits="fraction" y="0.0" yunits="fraction"/>
+          </IconStyle>
+        </Style>
+        <Point>
+          <coordinates>null,null</coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Lap 3</name>
+        <description>&lt;table width = "320"&gt;&lt;tr&gt;&lt;td&gt;Time:&lt;/td&gt;&lt;td&gt;00:03:32&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Distance:&lt;/td&gt;&lt;td&gt;1 Kilometers &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Elevation Gain:&lt;/td&gt;&lt;td&gt;--&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Elevation Loss:&lt;/td&gt;&lt;td&gt;--&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Max Speed:&lt;/td&gt;&lt;td&gt;17.3 Kilometers per Hour&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</description>
+        <Style>
+          <IconStyle>
+            <scale>1.0</scale>
+            <Icon>
+              <href>http://maps.google.com/mapfiles/kml/shapes/flag.png</href>
+            </Icon>
+            <hotSpot x="0.45" xunits="fraction" y="0.0" yunits="fraction"/>
+          </IconStyle>
+        </Style>
+        <Point>
+          <coordinates>null,null</coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Lap 4</name>
+        <description>&lt;table width = "320"&gt;&lt;tr&gt;&lt;td&gt;Time:&lt;/td&gt;&lt;td&gt;00:03:42&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Distance:&lt;/td&gt;&lt;td&gt;1 Kilometers &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Elevation Gain:&lt;/td&gt;&lt;td&gt;--&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Elevation Loss:&lt;/td&gt;&lt;td&gt;--&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Max Speed:&lt;/td&gt;&lt;td&gt;17.43 Kilometers per Hour&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</description>
+        <Style>
+          <IconStyle>
+            <scale>1.0</scale>
+            <Icon>
+              <href>http://maps.google.com/mapfiles/kml/shapes/flag.png</href>
+            </Icon>
+            <hotSpot x="0.45" xunits="fraction" y="0.0" yunits="fraction"/>
+          </IconStyle>
+        </Style>
+        <Point>
+          <coordinates>null,null</coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Lap 5</name>
+        <description>&lt;table width = "320"&gt;&lt;tr&gt;&lt;td&gt;Time:&lt;/td&gt;&lt;td&gt;00:03:56&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Distance:&lt;/td&gt;&lt;td&gt;1 Kilometers &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Elevation Gain:&lt;/td&gt;&lt;td&gt;--&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Elevation Loss:&lt;/td&gt;&lt;td&gt;--&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Max Speed:&lt;/td&gt;&lt;td&gt;18.07 Kilometers per Hour&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</description>
+        <Style>
+          <IconStyle>
+            <scale>1.0</scale>
+            <Icon>
+              <href>http://maps.google.com/mapfiles/kml/shapes/flag.png</href>
+            </Icon>
+            <hotSpot x="0.45" xunits="fraction" y="0.0" yunits="fraction"/>
+          </IconStyle>
+        </Style>
+        <Point>
+          <coordinates>null,null</coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Lap 6</name>
+        <description>&lt;table width = "320"&gt;&lt;tr&gt;&lt;td&gt;Time:&lt;/td&gt;&lt;td&gt;00:03:33&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Distance:&lt;/td&gt;&lt;td&gt;1 Kilometers &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Elevation Gain:&lt;/td&gt;&lt;td&gt;--&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Elevation Loss:&lt;/td&gt;&lt;td&gt;--&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Max Speed:&lt;/td&gt;&lt;td&gt;20.02 Kilometers per Hour&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</description>
+        <Style>
+          <IconStyle>
+            <scale>1.0</scale>
+            <Icon>
+              <href>http://maps.google.com/mapfiles/kml/shapes/flag.png</href>
+            </Icon>
+            <hotSpot x="0.45" xunits="fraction" y="0.0" yunits="fraction"/>
+          </IconStyle>
+        </Style>
+        <Point>
+          <coordinates>null,null</coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Lap 7</name>
+        <description>&lt;table width = "320"&gt;&lt;tr&gt;&lt;td&gt;Time:&lt;/td&gt;&lt;td&gt;00:03:32&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Distance:&lt;/td&gt;&lt;td&gt;1 Kilometers &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Elevation Gain:&lt;/td&gt;&lt;td&gt;--&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Elevation Loss:&lt;/td&gt;&lt;td&gt;--&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Max Speed:&lt;/td&gt;&lt;td&gt;17.84 Kilometers per Hour&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</description>
+        <Style>
+          <IconStyle>
+            <scale>1.0</scale>
+            <Icon>
+              <href>http://maps.google.com/mapfiles/kml/shapes/flag.png</href>
+            </Icon>
+            <hotSpot x="0.45" xunits="fraction" y="0.0" yunits="fraction"/>
+          </IconStyle>
+        </Style>
+        <Point>
+          <coordinates>null,null</coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Lap 8</name>
+        <description>&lt;table width = "320"&gt;&lt;tr&gt;&lt;td&gt;Time:&lt;/td&gt;&lt;td&gt;00:01:51&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Distance:&lt;/td&gt;&lt;td&gt;0.5 Kilometers &lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Elevation Gain:&lt;/td&gt;&lt;td&gt;--&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Elevation Loss:&lt;/td&gt;&lt;td&gt;--&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;Max Speed:&lt;/td&gt;&lt;td&gt;17.6 Kilometers per Hour&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;</description>
+        <Style>
+          <IconStyle>
+            <scale>1.0</scale>
+            <Icon>
+              <href>http://maps.google.com/mapfiles/kml/shapes/flag.png</href>
+            </Icon>
+            <hotSpot x="0.45" xunits="fraction" y="0.0" yunits="fraction"/>
+          </IconStyle>
+        </Style>
+        <Point>
+          <coordinates>null,null</coordinates>
+        </Point>
+      </Placemark>
+    </Folder>
+    <Folder>
+      <name>Track Points</name>
+      <description>Toggle to enable or disable animation of the activity.</description>
+      <Style>
+        <ListStyle>
+          <listItemType>checkHideChildren</listItemType>
+        </ListStyle>
+      </Style>
+    </Folder>
+  </Folder>
+</kml>
