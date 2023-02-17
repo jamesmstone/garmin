@@ -262,8 +262,8 @@ publishTable() {
 }
 
 function run() {
-  downloadAll
-  commitData
+  downloadAll || true
+  commitData || true
   local db="garmin.db"
   getDB "$db"
   ensureHaveAllWellnessSinceDate "$db" "2015-01-01"
