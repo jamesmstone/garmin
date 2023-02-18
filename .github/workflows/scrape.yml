@@ -15,6 +15,7 @@ jobs:
     - name: Docker build
       run: |-
         ./run.sh --only-build
+        git fetch origin db
     - name: restart docker with smaller MTU
       run: |-
         temp=$(mktemp)
