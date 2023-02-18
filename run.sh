@@ -215,8 +215,9 @@ commitDB() {
   rm -rf *
   mv "$tempDB" "$db"
   tar -cvzf "$db.tar.gz" "$db"
-  git add "$db.tar.gz"
-  git commit "$db.tar.gz" -m "push db"
+  split -b 99M "$db.tar.gz" "$db.tar.gz.part"
+  git add "$db.tar.gz.part*"
+  git commit "$db.tar.gz.part*" -m "push db"
   git push origin "$dbBranch" -f
 }
 
@@ -224,8 +225,10 @@ getDB() {
   local dbBranch="db"
   local db="$1"
   git fetch origin "$dbBranch"
-  git show "origin/$dbBranch:$db.tar.gz" | tar -zxf - || return 0
-  ls
+  git ls-tree -r --name-only "origin/$dbBranch" |
+    sort |
+    xargs -I % -n1 git show "origin/$dbBranch:%" |
+    tar -zxf - || return 0
 }
 commitData() {
   git config user.name "Automated"
