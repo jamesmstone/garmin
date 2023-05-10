@@ -1,4 +1,5 @@
-from garpy import Wellness, GarminClient
+from garpy import Wellness
+from garpyclient import GarminClient
 from sqlite_utils import Database
 import pendulum
 import tempfile

@@ -1,4 +1,5 @@
 garpy
+garpyclient
 python-memo
 fitparse
 pytz
