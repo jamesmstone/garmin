@@ -34,5 +34,6 @@ jobs:
         VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         GARMIN_USERNAME: ${{ secrets.GARMIN_USERNAME }}
         GARMIN_PASSWORD: ${{ secrets.GARMIN_PASSWORD }}
+        LIFELINE_CONNECTION_STRING: ${{ secrets.LIFELINE_CONNECTION_STRING }}
       run: |-
         ./run.sh
