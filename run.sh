@@ -278,7 +278,7 @@ function run() {
   wait
   
   local maxTimestamp=$(psql "$LIFELINE_CONNECTION_STRING" -tAc "select coalesce((SELECT EXTRACT(epoch FROM MAX(time)) FROM public.heart_rate),0);")
-  sql-utils "$db" "select datetime(unix_timestamp, 'unixepoch') as time, avg(heart_rate) from heart_rate where unix_timestamp > $maxTimestamp group by 1" --csv | psql "$LIFELINE_CONNECTION_STRING" -c "COPY heart_rate FROM STDIN DELIMITER ',' CSV HEADER;"
+  sql-utils "$db" "select datetime(unix_timestamp, 'unixepoch') as time, CAST(avg(heart_rate) as INTEGER) from heart_rate where unix_timestamp > $maxTimestamp group by 1" --csv | psql "$LIFELINE_CONNECTION_STRING" -c "COPY heart_rate FROM STDIN DELIMITER ',' CSV HEADER;"
 
 
 }
