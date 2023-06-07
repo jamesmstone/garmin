@@ -277,7 +277,7 @@ function run() {
   publishTable "$db" "stress_level" "garmin-stress" &
   wait
   
-  local maxTimestamp=$(psql "$LIFELINE_CONNECTION_STRING" -tAc "SELECT EXTRACT(epoch FROM MAX(time)) FROM public.heart_rate;")
+  local maxTimestamp=$(psql "$LIFELINE_CONNECTION_STRING" -tAc "select coalesce((SELECT EXTRACT(epoch FROM MAX(time)) FROM public.heart_rate),0);")
   sql-utils "$db" "select unix_timestamp as time, heart_rate from heart_rate where unix_timestamp > $maxTimestamp" --csv | psql "$LIFELINE_CONNECTION_STRING" -c "COPY heart_rate FROM STDIN DELIMITER ',' CSV HEADER;"
 
 
