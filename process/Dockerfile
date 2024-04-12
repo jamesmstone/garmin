@@ -1,4 +1,4 @@
-FROM python:slim
+FROM python:3.11-slim
 ENV TZ=UTC
 WORKDIR /usr/src/app
 
