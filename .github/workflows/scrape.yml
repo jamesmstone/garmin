@@ -12,10 +12,6 @@ jobs:
     steps:
     - name: Check out this repo
       uses: actions/checkout@v4
-    - name: Docker build
-      run: |-
-        ./run.sh --only-build
-        git fetch origin db
     - name: restart docker with smaller MTU
       run: |-
         temp=$(mktemp)
@@ -37,4 +33,11 @@ jobs:
         GARMIN_PASSWORD: ${{ secrets.GARMIN_PASSWORD }}
         LIFELINE_CONNECTION_STRING: ${{ secrets.LIFELINE_CONNECTION_STRING }}
       run: |-
-        ./run.sh
+        ./runGarminDb.sh --all --download --import --analyze --latest
+    - name: artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: dbs-and-log
+        path: |
+          DBs
+          *.log
