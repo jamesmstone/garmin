@@ -33,7 +33,7 @@ jobs:
         GARMIN_PASSWORD: ${{ secrets.GARMIN_PASSWORD }}
         LIFELINE_CONNECTION_STRING: ${{ secrets.LIFELINE_CONNECTION_STRING }}
       run: |-
-        ./runGarminDb.sh --all --download --import --analyze --latest
+        ./runGarminDb.sh --all --download --import --analyze
     - name: artifacts
       uses: actions/upload-artifact@v4
       with:
