@@ -6,9 +6,6 @@ set -x
 
 dockerGarminDB='garmindb'
 
-GARMIN_USERNAME='jamesmstone@hotmail.com'
-GARMIN_PASSWORD='&RkGsqNi&n9OMy1BgU2Wca$ko!5!2kEC'
-
 buildGarminDB() {
   docker build --tag "$dockerGarminDB" --pull --file garminDB.Dockerfile .
 }
