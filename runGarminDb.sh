@@ -65,6 +65,7 @@ jq -n --arg user "$GARMIN_USERNAME" --arg pass "$GARMIN_PASSWORD" '
 
   docker run \
     -v"$(pwd):/wd" \
+    -v"$(pwd)/HealthData:/root/HealthData" \
     -e username="$GARMIN_USERNAME" \
     -e password="$GARMIN_PASSWORD" \
     -w /wd \
