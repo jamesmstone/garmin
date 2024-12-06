@@ -30,7 +30,7 @@ jobs:
         GARMIN_USERNAME: ${{ secrets.GARMIN_USERNAME }}
         GARMIN_PASSWORD: ${{ secrets.GARMIN_PASSWORD }}
       run: |-
-        ./runGarminDb.sh --all --download --import --analyze
+        ./runGarminDb.sh --all --download --import --analyze --latest
     - name: artifacts
       uses: actions/upload-artifact@v4
       with:
