@@ -27,11 +27,8 @@ jobs:
         tags: tag:ci
     - name: Fetch latest data
       env:
-        FLY_ACCESS_TOKEN: ${{ secrets.FLY_ACCESS_TOKEN }}
-        VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         GARMIN_USERNAME: ${{ secrets.GARMIN_USERNAME }}
         GARMIN_PASSWORD: ${{ secrets.GARMIN_PASSWORD }}
-        LIFELINE_CONNECTION_STRING: ${{ secrets.LIFELINE_CONNECTION_STRING }}
       run: |-
         ./runGarminDb.sh --all --download --import --analyze
     - name: artifacts
