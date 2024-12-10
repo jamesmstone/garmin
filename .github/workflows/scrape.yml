@@ -30,19 +30,19 @@ jobs:
         GARMIN_USERNAME: ${{ secrets.GARMIN_USERNAME }}
         GARMIN_PASSWORD: ${{ secrets.GARMIN_PASSWORD }}
       run: |-
-         # Statistics:
-         #   -A, --all             Download and/or import data for all enabled stats.
-         #   -a, --activities      Download and/or import activities data.
-         #   -m, --monitoring      Download and/or import monitoring data.
-         #   -r, --rhr             Download and/or import resting heart rate data.
-         #   -s, --sleep           Download and/or import sleep data.
-         #   -w, --weight          Download and/or import weight data.
-         # 
-         # Modifiers:
-         #     -l, --latest          Only download and/or import the latest data.
-         #     -o, --overwrite       Overwite existing files when downloading. The default
-         #       is to only download missing files.
         ./runGarminDb.sh --activities --import --analyze --latest
+      # Statistics:
+      #   -A, --all             Download and/or import data for all enabled stats.
+      #   -a, --activities      Download and/or import activities data.
+      #   -m, --monitoring      Download and/or import monitoring data.
+      #   -r, --rhr             Download and/or import resting heart rate data.
+      #   -s, --sleep           Download and/or import sleep data.
+      #   -w, --weight          Download and/or import weight data.
+      #
+      # Modifiers:
+      #     -l, --latest          Only download and/or import the latest data.
+      #     -o, --overwrite       Overwite existing files when downloading. The default
+      #       is to only download missing files.
     - name: artifacts
       uses: actions/upload-artifact@v4
       with:
