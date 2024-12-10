@@ -30,7 +30,7 @@ jobs:
         GARMIN_USERNAME: ${{ secrets.GARMIN_USERNAME }}
         GARMIN_PASSWORD: ${{ secrets.GARMIN_PASSWORD }}
       run: |-
-        ./runGarminDb.sh --activities --weight --sleep --rhr --import --analyze --latest
+        ./runGarminDb.sh --activities --weight --sleep --rhr --monitoring --import --analyze --latest
       # Statistics:
       #   -A, --all             Download and/or import data for all enabled stats.
       #   -a, --activities      Download and/or import activities data.
