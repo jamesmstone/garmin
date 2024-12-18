@@ -77,6 +77,9 @@ jq -n --arg user "$GARMIN_USERNAME" --arg pass "$GARMIN_PASSWORD" '
 }
 
 commitData() {
+
+  mv "$db" "$tempDB"
+  
   git config user.name "Automated"
   git config user.email "actions@users.noreply.github.com"
   git add -A
@@ -84,10 +87,8 @@ commitData() {
   git commit -m "Latest data: ${timestamp}" || true
   git push
 
-  
   git branch -D "$dbBranch" || true
   git checkout --orphan "$dbBranch"
-  mv "$db" "$tempDB"
   rm -rf *
   mv "$tempDB" "$db"
   tar -cvzf "$db.tar.gz" "$db"
