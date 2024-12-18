@@ -7,6 +7,7 @@ set -x
 dockerGarminDB='garmindb'
 dbBranch="db"
 db="HealthData/DBs"
+tempDB="$(mktemp -d)"
 
 buildGarminDB() {
   docker build --tag "$dockerGarminDB" --pull --file garminDB.Dockerfile .
