@@ -5,6 +5,8 @@ set -o errexit
 set -x
 
 dockerGarminDB='garmindb'
+dbBranch="db"
+db="HealthData/DBs"
 
 buildGarminDB() {
   docker build --tag "$dockerGarminDB" --pull --file garminDB.Dockerfile .
@@ -81,9 +83,33 @@ commitData() {
   timestamp=$(date -u)
   git commit -m "Latest data: ${timestamp}" || true
   git push
+
+  
+  git branch -D "$dbBranch" || true
+  git checkout --orphan "$dbBranch"
+  mv "$db" "$tempDB"
+  rm -rf *
+  mv "$tempDB" "$db"
+  tar -cvzf "$db.tar.gz" "$db"
+  split -b 99M "$db.tar.gz" "$db.tar.gz.part"
+  git add "$db.tar.gz.part*"
+  git commit "$db.tar.gz.part*" -m "push db parts"
+  git add "$db"
+  git commit "$db" -m "push db"
+  git push origin "$dbBranch" -f
+}
+
+getDBs() {
+  local db="$1"
+  git fetch origin "$dbBranch"
+  git ls-tree -r --name-only "origin/$dbBranch" |
+    sort |
+    xargs -I % -n1 git show "origin/$dbBranch:%" |
+    tar -zxf - || return 0
 }
 
 buildGarminDB
+getDBs || true
 
 garminDB "$@"
 commitData
