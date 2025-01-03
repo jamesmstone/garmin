@@ -107,11 +107,11 @@ getDBs() {
   git ls-tree -r --name-only "origin/$dbBranch" |
     sort |
     xargs -I % -n1 git show "origin/$dbBranch:%" |
-    tar -zxf - || return 0
+    tar -zxf "$db" || return 0
 }
 
 buildGarminDB
-getDBs || true
+getDBs "$db" || true
 
 garminDB "$@"
 commitData
