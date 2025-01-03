@@ -91,6 +91,7 @@ commitData() {
   git branch -D "$dbBranch" || true
   git checkout --orphan "$dbBranch"
   rm -rf *
+  mkdir -p "$(dirname $db)"
   mv "$tempDB" "$db"
   tar -cvzf "$db.tar.gz" "$db"
   split -b 99M "$db.tar.gz" "$db.tar.gz.part"
