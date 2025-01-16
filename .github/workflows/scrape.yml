@@ -15,7 +15,7 @@ jobs:
     - name: restart docker with smaller MTU
       run: |-
         temp=$(mktemp)
-        touch "/etc/docker/daemon.json"
+        sudo touch "/etc/docker/daemon.json"
         jq '. + {"mtu": 1280 }'  < "/etc/docker/daemon.json" > "$temp"
         sudo mv "$temp" "/etc/docker/daemon.json"
         sudo  systemctl restart docker
