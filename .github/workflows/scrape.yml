@@ -26,6 +26,7 @@ jobs:
         oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
         oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
         tags: tag:ci
+        args: --accept-dns=false
     - name: Fetch latest data
       env:
         GARMIN_USERNAME: ${{ secrets.GARMIN_USERNAME }}
