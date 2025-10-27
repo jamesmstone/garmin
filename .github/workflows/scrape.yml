@@ -48,7 +48,7 @@ jobs:
       #     -o, --overwrite       Overwite existing files when downloading. The default
       #       is to only download missing files.
     - name: artifacts
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v5
       with:
         name: dbs-and-log
         path: |
